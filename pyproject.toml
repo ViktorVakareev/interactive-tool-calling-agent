@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "interactive-tool-calling-agent"
+version = "1.0.0"
+description = "Interactive tool-calling agent with LangChain 1.x — the LLM tool-calling loop built by hand (bind_tools, tool_calls, ToolMessage) and compared with create_agent. Calculator and tip-calculator tools, parallel and chained calls, Gemini (free), OpenAI or offline mode. 73 tests, 98% coverage."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "VictorV" }]
+keywords = ["langchain", "langgraph", "ai-agents", "tool-calling", "function-calling", "agentic-ai", "llm", "gemini", "openai", "python", "pytest", "cli", "jupyter-notebook", "coursera", "portfolio-project"]
+dependencies = [
+    "langchain>=1.0",
+    "langchain-core>=1.0",
+    "python-dotenv>=1.0",
+]
+
+[project.optional-dependencies]
+gemini = ["langchain-google-genai>=3.0"]
+openai = ["langchain-openai>=1.0"]
+dev = ["pytest>=8", "pytest-cov>=5", "nbclient>=0.10", "nbformat>=5.10", "ipykernel>=6"]
+all = ["interactive-tool-calling-agent[gemini,openai,dev]"]
+
+[project.scripts]
+tool-agent = "tool_agent.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+markers = ["live: calls a real LLM API (needs GOOGLE_API_KEY or OPENAI_API_KEY); skipped otherwise"]
